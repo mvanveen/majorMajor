@@ -7,11 +7,12 @@
 import subprocess
 import urllib2
 from datetime import datetime
-
+#TODO: Change from subprocess call to urllib2
+#TODO: Change user-agent to "majorMajor"
 class Link():
 	def __init__(self, url, title=""):
-		self.__url 					= url
-		self.__title 				= title
+		self.__url 					= str(url)
+		self.__title 				= str(title)
 		self.__referrer 	 	= dict()
 		self.__dateCreated	= datetime.now()
 		

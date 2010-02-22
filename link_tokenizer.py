@@ -28,7 +28,6 @@ def parse(fileName):
 
 def normalizeURL(url, fromLink):
 # TODO: no trailing "/"'s
-#				
 	pattern = re.compile("http://")
 	if(re.search(pattern, url) == None):
 		if not((url[0] == "/") and (fromLink[-1] == "/")):
@@ -43,24 +42,22 @@ def prune(x):
 #input = sys.stdin.readline().split('\t')
 #y			= Link(input[0], input[1])
 
-def performLinks(linkList, depth, depthMax):
-	if (depth < depthMax):
-		#print [Link(x) for x in linkList]
-		results = [parse(y._wget()) for y in [Link(z) for z in linkList]]
-		
-		for results, link in zip(results, linkList):
-			print results
-			results = [normalizeURL(x, link) for x in results]
-		pprint.pprint(zip(results, linkList))
-		#results = [normalizeURL(result, link) for result in zip(results, linkList)]
-		
-		#result = [normalizeURL(x.getURL(), x) for x in result]
-	return performLinks(results, depth+1, depthMax)
+#def performLinks(inBound, outBound, depth, depthMax):
+#	if (depth < depthMax):
+#				outBound 	= [link(x) for x in outBoundList]
+#				return([parse(x._wget()) for y in outBound], outBound, depth+1, depthMax)
+#
+#		results = [parse(y._wget()) for y in [Link(z) for z in linkList]]
+#	
+#		#results = [normalizeURL(result, link) for result in zip(results, linkList)]
+#		
+#		#result = [normalizeURL(x.getURL(), x) for x in result]
+#	return performLinks(results, depth+1, depthMax)
 
-print performLinks(["http://www.google.com", "http://www.reddit.com"], 0, 2)
+#print performLinks(["http://www.google.com", "http://www.reddit.com"], 0, 2)
 
 #if __name__ == "main":
-	#pool 		= Pool(proccesses = 4)
+#	pool 		= Pool(proccesses = 4)
 	#initial_cond = [google.com]
 	#result 	= pool.apply_async()
 
