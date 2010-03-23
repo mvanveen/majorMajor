@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 #===============================================================================
 # link.py
 #===============================================================================
@@ -8,15 +10,17 @@ import subprocess
 import urllib2
 from datetime import datetime
 import codecs
+import magic
 #TODO: Change from subprocess call to urllib2
 #TODO: Change user-agent to "majorMajor"
+
 class Link():
 	def __init__(self, url):
 		self.__url 					= str(url)
 		self.__referrer 	 	= dict()
 		self.__dateCreated	= datetime.now()
 		self.__dateModified	= datetime.now()
-		self.__contentType	= ""
+		self.__contentType	= None
 		self.__Content			= list()
 
 	def addRefferer(self, url, count):
@@ -44,9 +48,12 @@ class Link():
 		pipe						=	subprocess.Popen(	my_args, stdout=subprocess.PIPE, 
 																			stdin=None, stderr=None, 
 																			shell=False) 
-		file = codecs.open(self.__fileName, "wa", 'utf-8')
-		out = pipe.communicate()[0].decode('utf-8', "replace")
+		file 	= codecs.open(self.__fileName, "wa", 'utf-8')
+		out 	= pipe.communicate()[0].decode('utf-8', "replace")
 		file.write(out)
 		file.close()
+		#libMagic 						= magic.open(magic.MAGIC_NONE)
+		#self.__contentType 	= libMagic.file(out.decode("ascii", "ignore"))
 
 		return(self.__Content[len(self.__Content)-1].decode("utf-8", "replace"))
+

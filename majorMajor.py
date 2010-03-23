@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 #===============================================================================
 # majorMajor.py
 #===============================================================================
@@ -56,5 +58,7 @@ if __name__ == "__main__":
 	input = sys.argv[1]
 	#a = p.map(makeLink, p.map(processLinks, [Link("http://www.google.com")])[0][0])
 	#a = p.map(makeLink, p.map(processLinks, [Link(input)[0][0])
-	pprint.pprint(map(processLinks, [Link(input)])[0][0])
+	file = open("input", "r").readlines()
+	file = [Link(x) for x in file]
+	pprint.pprint(map(processLinks, file)[0][0])
 	#print	map(lambda x: processLinks(x), [Link(input)])

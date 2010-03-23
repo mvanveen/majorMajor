@@ -1,0 +1,73 @@
+Write a link scheduler.
+It's job is to order and prune a list of url's based of an existing set of urls 
+
+# Interesting Links:
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.73.9096&rep=rep1&type=pdf
+http://cis.poly.edu/suel/talks/icde-crawl.ppt
+
+Requirement:
+= The web crawler must be "well-behaved," in the sense that it cannot revisit a particular domain before x units of time (30 seconds?)
+= Web crawler must obey robots.txt files
+= The web crawler should prioritize "salient" pages over those which are not "salient." 
+= The number of referrer's coming into a given url affects a url's saliency.
+
+= The last time the page was visited affects a page's saliency
+= There should be no duplicate URLs in the web graph
+
+= Rapidly changing pages need to be visited more often
+= Powerful diagnostics and statistics need to be available about the crawling process for fine-tuning and behavior modification experiments
+
+Idea: emulate lottery scheduling.
+= Hand out a finite amount of tickets to each link.
+= Redistribute tickets according to this metric.
+
+Input: Set of new links
+
+ Reducer: 	remove duplicates, place results into link pool.
+					 	Check whether each link is in the system or not
+						For each domain in the system, add new set of links to it.
+				
+
+Keep everything stored by domain.  A process wakes up, grabs a set of domains, and processes the links found within them.  In this way, we can guarantee that a domain gets visited no more than once per some unit of time.
+Each domain has a set of links that are prioritized.
+Each worker needs a heterogenous set of links to simultaneously process many requests, so some large number of domains should be acquired.
+A worker has a set of pruning rules handed off from the domain object that it can use to quickly investigate whether or not to to grab a link
+
+
+Alllow clients to download multiple pages from a given http-connection (utilize the http keep-alive feature).
+Prioritize by most number of new links in page
+Each client grabs a large number of pages from a domain, but using only 1 http request every 15 seconds.
+
+State space should also be pruned based on file-type
+
+Consideration: hash the URLS to reduce their size
+-- huffman coding
+
+ Wait time proportional to the last download time before contacting the last download time.
+
+2/23/10 
+
+	Worker should grab pickled hostname filenames, and "work" on them.
+ - Global facility to coordinate which worker has which hostnames
+ - Ability to grab a hostname that hasn't been seen yet
+		(Don't worry guys I got this one)
+
+	- Links go into a small SQLite table.  What values are we interested in?
+	-- the url
+	-- local or external
+	-- last time seen
+	-- original time seen
+	-- A list of ".out" files
+	-- content type (html, jpg, what)
+	-- isomorphism between Links and SQLite
+	--- perhaps a "make row" function in Link to make insertion particularly nice?
+
+- It is pertinent to occaisionally do some "hostname space" scheduling, such as checking to see if a robots.txt file has changed
+
+
+map step:
+	input: 	a list of links
+	mapper:	divide up list of links, and increase frontier
+
+TODO: Mapper should be a C program, maybe?.
+TODO:	Web crawl browser should be uniform across project.
