@@ -1,4 +1,41 @@
+Hostname Requirements
+--------------------------------------------------
+- Successfully requests multiple inbound links 
+		from different hostnames concurrently
+
+- Links are inserted and retrieved quickly
+-- TODO: Define "quickly"
+
+- Schedules according to arbitrary scheduling function
+
+- Obeys robots.txt files
+
+- Guarantees politeness (>15 secs b/t http requests)
+
+- In order to be guarantee politeness, a hostname must ultimately 
+		be responsible for the determination of a given link acquisition.  Otherwise,
+		impossible to guarantee whether or not a link has been visited.
+
+- Hostnames should try to grab as many links as possible.
+
+- When a hostname encounters a foreign link, 
+		it needs to delegate it quickly and efficiently.
+--- Dump into sqlite object to be parsed later
+
+- Hostname-level priority tasks:
+		-- Grabbing a robots.txt file periodically
+		-- Acquiring inbound urls from objects from other host names
+
+Types of actions a hostname can be performing:
+- Link acquisition
+-- Hands off links to workers who grab links
+---- Each worker takes links, and then develops a new frontier.
+			This frontier gets pushed into a giant sqlite table to be processed later.
+
+Scheduler
+============================
 Write a link scheduler.
+
 It's job is to order and prune a list of url's based of an existing set of urls 
 
 # Interesting Links:
@@ -71,3 +108,4 @@ map step:
 
 TODO: Mapper should be a C program, maybe?.
 TODO:	Web crawl browser should be uniform across project.
+
