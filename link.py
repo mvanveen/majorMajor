@@ -5,7 +5,7 @@
 # ==============================================================================
 # Author: 				Michael Van Veen
 # Created: 				03-23-2010
-# Last Modified:	2010-03-23T00:32:14-0700
+# Last Modified:	2010-03-23T05:31:36-0700
 # ==============================================================================
 # DESCRIPTION
 # ==============================================================================
@@ -52,8 +52,10 @@ class Link():
 		pipe						=	subprocess.Popen(	my_args, stdout=subprocess.PIPE, 
 																			stdin=None, stderr=None, 
 																			shell=False) 
-		file 	= codecs.open(self.__fileName, "wa", 'utf-8')
-		out 	= pipe.communicate()[0].decode('utf-8', "replace")
+		#file 	= codecs.open(self.__fileName, "wa", 'utf-8')
+		file = codecs.open(self.__fileName, "wb")
+		#out 	= pipe.communicate()[0].decode('utf-8', "replace")
+		out 	= pipe.communicate()[0]
 		file.write(out)
 		file.close()
 		#libMagic 						= magic.open(magic.MAGIC_NONE)

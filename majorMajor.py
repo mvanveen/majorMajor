@@ -5,10 +5,12 @@
 # ==============================================================================
 # Author: 				Michael Van Veen
 # Created: 				03-23-2010
-# Last Modified:	2010-03-23T00:32:41-0700
+# Last Modified:	2010-03-23T05:25:01-0700
 # ==============================================================================
 #	The duty of this file is to parse a given set of url's and output a list 
 # of url's.
+# 
+# Suggested tab width: 2
 # ==============================================================================
 
 import pprint
@@ -52,15 +54,11 @@ def processLinks(x):
 	return(map(lambda y: normalizeURL(y, x.getURL()),
 										parse(x._wget())), x)
 
-def makeLink(x):
-	return(Link(x))
 
 if __name__ == "__main__":
-	#p			= Pool(processes=4)
-	input = sys.argv[1]
-	#a = p.map(makeLink, p.map(processLinks, [Link("http://www.google.com")])[0][0])
-	#a = p.map(makeLink, p.map(processLinks, [Link(input)[0][0])
-	file = open("input", "r").readlines()
-	file = [Link(x) for x in file]
-	pprint.pprint(map(processLinks, file)[0][0])
-	#print	map(lambda x: processLinks(x), [Link(input)])
+	file 			= [Link(x[:-1]) for x in open("input", "r").readlines()]
+	output 		= open("input", "a")
+	processed = [y[0] for y in [processLinks(z) for z in file]]
+
+	print processed
+	[output.writelines(["".join((x, '\n')) for x in processed])]
